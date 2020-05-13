@@ -14,7 +14,7 @@ import Bar from "../charts/bar";
 import Line from "../charts/line";
 import Pie from "../charts/pie";
 import Order from "../order/order";
-import Product from '../product/product'
+import Product from '../product/product';
 import Role from '../role/role';
 import User from '../user/user';
 

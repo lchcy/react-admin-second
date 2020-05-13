@@ -125,7 +125,7 @@ class LeftNav extends Component {
         this.menuNodes = this.getMenuNodes(menuList)
     };
     render() {
-        console.log('left-nav render()');
+        // console.log('left-nav render()');
         const menuNodes = this.getMenuNodes2(menuList);
         //得到当前请求的路由路径
         const selectKey = this.props.location.pathname;
