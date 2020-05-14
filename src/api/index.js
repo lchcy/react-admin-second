@@ -6,6 +6,7 @@ import jsonp from 'jsonp';//axios不能发jsonp请求
 // import qs from 'qs'
 import ajax from './ajax';
 import { message } from 'antd';
+// import Search from 'antd/lib/input/Search';
 // import axios from './ajax';
 
 const BASE = ''
@@ -22,13 +23,10 @@ export function reqLogin(username, password) {
         // data:qs.stringify({username,password})
     })
 };
-const name = 'tom'
-const pwd = '123'
-reqLogin(name, pwd)
+const name = 'tom';
+const pwd = '123';
+reqLogin(name, pwd);
 //将实参数据赋值形参变量
-
-
-
 
 //发送jsonp请求得到天气信息
 export const reqWeather = (city) => {
@@ -46,7 +44,7 @@ export const reqWeather = (city) => {
         });
     });
     ;
-}
+};
 
 //获取分类列表
 // export const reqCategorys =()=> ajax.get(BASE + '/mange/category/list')
@@ -54,9 +52,46 @@ export const reqWeather = (city) => {
      // method:'GET',
      url:BASE + '/mange/category/list'
  }) */
-export const reqCategorys = () => ajax(BASE + '/mange/category/list')
+export const reqCategorys = () => ajax(BASE + '/mange/category/list');
 
 //添加分类
-export const reqAddCategory = (categoryName) => ajax.post(BASE + '/manage/category/add', { categoryName })
+export const reqAddCategory = (categoryName) => ajax.post(BASE + '/manage/category/add', { categoryName });
 //修改分类
-export const reqUpdateCategory = ({categoryId,categoryName}) => ajax.post(BASE + '/manage/category/update', { categoryId,categoryName })
+export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax.post(BASE + '/manage/category/update', { categoryId, categoryName });
+
+
+/* 获取商品分页列表 */
+export const reqProducts = (pageNum, pageSize) => ajax(BASE + '/manage/product/list', {
+    params: {//包含所有query的对象
+        pageNum,
+        pageSize
+    }
+});
+/* 根据name/desc搜索产品分页列表 */
+export const reqSearchProducts = ({
+    pageNum,
+    pageSize,
+    searchName,
+    searchType//它的值是'productName'或者'productDesc'
+}) => ajax(BASE + '/manage/product/search', {
+    // method:'GET'
+    params: {
+        pageNum,
+        pageSize,
+        [searchType]: searchName,
+
+    }
+});
+
+/* 对商品进行上架/下架处理 */
+export const reqUpdateStatus = (productId, status) => ajax(BASE + '/manage/product/updateStatus', {
+    method: 'POST',
+    data: {
+        productId,
+        status
+    }
+})
+// ajax.post(BASE + '/manage/product/updateStatus',{
+//     productId,
+//     status
+// })

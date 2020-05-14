@@ -109,11 +109,29 @@
         result = arr.findIndex((item, index) => index % 2 === 1 && item % 2 === 1)
         console.log(result)
 
-        // 6.every()
-        arr.every((item, index) => item >
-        )
+        // 6.every()//所有
+        Array.prototype.every = function (callback) {
+            for (let index = 0; index < this.length; index++) {
+                if (!callback(this[index], index)) {
+                    return false
+                }
+            }
+            return true
+        }
+        result = arr.every((item, index) => item > 3)
+        console.log(result)
 
-        // 7.some()
+        // 7.some()//有一个
+        Array.prototype.some = function (callback) {
+            for (let index = 0; index < this.length; index++) {
+                if (callback(this[index], index)) {
+                    return true
+                }
+            }
+            return false
+        }
+        result = arr.some((item, index) => item > 3)
+        console.log(result)
     </script>
 </body>
 

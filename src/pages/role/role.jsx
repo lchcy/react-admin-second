@@ -1,87 +1,18 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
-// import { Pagination } from 'antd';s
-
-const renderContent = (value, row, index) => {
-  const obj = {
-    children: value,
-    props: {},
-  };
-  if (index === 4) {
-    obj.props.colSpan = 0;
-  }
-  return obj;
-};
-
-
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    tel: '0571-22098909',
-    phone: 18889898989,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    tel: '0571-22098333',
-    phone: 18889898888,
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    tel: '0575-22098909',
-    phone: 18900010002,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 18,
-    tel: '0575-22098909',
-    phone: 18900010002,
-    address: 'London No. 2 Lake Park',
-  },
-  {
-    key: '5',
-    name: 'Jake White',
-    age: 18,
-    tel: '0575-22098909',
-    phone: 18900010002,
-    address: 'Dublin No. 2 Lake Park',
-  }, {
-    key: '',
-    name: '合计',
-    age: '',
-    tel: '',
-    phone: '',
-    address: '',
-  },
-];
+import { data } from "./data";
 
 class role extends Component {
-  changePagination = pagination => {
-
+  state = {
+    dataSource: [],
+    loading: true
   };
 
-  componentWillMount() {
+  initColumns = () => {
     this.columns = [
       {
         title: 'Name',
         dataIndex: 'name',
-        // render: (text, record, index) => {
-        //   if (record.totalIndex == '合计') {
-        //     return text;
-        //   } else {
-        //     return ++index;
-        //   }
-        // }
 
       },
       {
@@ -115,39 +46,78 @@ class role extends Component {
       },
     ]
   }
-  componentDidMount() {
 
+
+
+  componentWillMount() {
+    //初始化表头
+    this.initColumns();
+  };
+
+  componentDidMount() {
+    //模拟异步获取数据
+    this.getData(1, 10);
+  };
+
+  getData = (page, limit) => {
+    setTimeout(() => {
+      //数据类型转换
+      page = Number.parseInt(page);
+      limit = Number.parseInt(limit);
+      const newData = data.slice((page - 1) * limit, (page - 1) * limit + limit)
+      //添加汇总信息
+      let sumAge = 0;
+      newData.forEach(item => (sumAge += Number.parseInt(item.age)));
+      console.log(sumAge);
+      let sumTel = 0;
+      newData.forEach(item => (sumTel += Number.parseInt(item.phone)))
+      const total = {
+        key: '-1',
+        name: "合计",
+        age: sumAge,
+        tel: '',
+        phone: sumTel,
+        address: ''
+      }
+      newData.unshift(total);
+      this.setState({
+        dataSource: newData,
+        loading: false
+      })
+    }, 1000)
   }
 
   handleStandardTableChange = (page, pageSize) => {
-    console.log(page, pageSize)
-  }
+    this.setState({
+      loading: true
+    })
+    this.getData(page, pageSize)
+    console.log(page, pageSize)//点击事件，点击分页会显示
+  };
 
   render() {
-    const { pageSize } = this.props
-    const _pageSize = pageSize + 1
-
+    const { pageSize } = this.props;
+    const _pageSize = pageSize + 1;
+    const { loading, dataSource } = this.state;
     const paginationProps = {
-
       showSizeChanger: true,
       showQuickJumper: true,
       pageSize: _pageSize,
       showTotal: total => `共${total}条`,
-      onChange: this.handleStandardTableChange
-    }
+      onChange: this.handleStandardTableChange,
+      total: data.length
+    };
     return (
       <div>
         <Table columns={this.columns}
-          dataSource={data}
+          dataSource={dataSource}
           pagination={paginationProps}
-          onChange={this.changePagination}
           bordered
-
+          loading={loading}
         />
       </div>
-
     );
-  }
-}
+  };
+};
 
 export default role;

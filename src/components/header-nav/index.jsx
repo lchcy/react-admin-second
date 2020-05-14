@@ -11,7 +11,7 @@ import './index.less';
 
 class Header extends Component {
 
-    
+
 
     state = {
         currentTime: formateDate(Date.now()),
@@ -62,7 +62,7 @@ class Header extends Component {
     */
     getWeather = async () => {
         //发请求
-        const { dayPictureUrl, weather } = await reqWeather('北京')
+        const { dayPictureUrl, weather } = await reqWeather('杭州')
         //更新状态
         this.setState({
             dayPictureUrl,
