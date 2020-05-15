@@ -4,6 +4,7 @@ import { Card, Select, Input, Button, Icon, Table, message } from "antd";
 import { reqProducts, reqSearchProducts, reqUpdateStatus } from "../../api";
 import LinkButton from '../../components/link-button';
 import { PAGE_SIZE } from '../../utils/Constants.js'
+import memoryUtils from '../../utils/memoryUtils';
 
 
 const Option = Select.Option
@@ -93,8 +94,24 @@ class ProductHome extends Component {
                 dataIndex: 'price',
                 render: (product) => (
                     <span>
-                        <LinkButton onClick={() => this.props.history.push('/product/detail'), product}>详情</LinkButton>
-                        <LinkButton>修改</LinkButton>
+                        <LinkButton
+                            onClick={() => {
+                                //在内存中保存product
+                                memoryUtils.product = product
+                                this.props.history.push('/product/detail')
+                            }}
+                        >
+                            详情
+                        </LinkButton>
+                        <LinkButton
+                            onClick={() => {
+                                //在内存中保存product
+                                memoryUtils.product = product
+                                this.props.history.push('/product/update')
+                            }}
+                        >
+                            修改
+                        </LinkButton>
                     </span>
                 )
             },
@@ -159,7 +176,10 @@ class ProductHome extends Component {
             </span>
         );
         const extra = (
-            <Button type="primary">
+            <Button type="primary" onClick={() => {
+                memoryUtils.product = {}
+                this.props.history.push('/product/update')
+            }}>
                 <Icon type="plus"></Icon>
                 添加商品
             </Button>

@@ -46,7 +46,7 @@ class LeftNav extends Component {
                  判断当前的item的key是否是我需要的openKey
                 查找item中的所有的children中的cItem的key，看是否有一个跟请求的path匹配
                 */
-                const cItem = item.children.find(cItem => cItem.key === path)
+                const cItem = item.children.find(cItem => path.indexOf(cItem.key) === path)
                 if (cItem) {
                     this.openKey = item.key
                 }
@@ -128,7 +128,10 @@ class LeftNav extends Component {
         // console.log('left-nav render()');
         const menuNodes = this.getMenuNodes2(menuList);
         //得到当前请求的路由路径
-        const selectKey = this.props.location.pathname;
+        let selectKey = this.props.location.pathname;//product/xxx
+        if (selectKey.indexOf('/product') === 0) {
+            selectKey = '/product'
+        }
         // console.log('selectKey', selectKey);
         return (
             <div className="left-nav">

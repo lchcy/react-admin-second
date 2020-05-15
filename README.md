@@ -52,7 +52,7 @@
    2.用arr.unshift添加一条合并数组
 
 
-## 20200614内容
+## 20200514内容
    ## 1.Category组件使用antd组件构建分类列表界面
       Card
       Table
@@ -124,3 +124,45 @@
          6.every()
          7 .some()
             
+## 20200515内容
+
+   ## 1.ProductHome组件
+         2.搜索分页
+            接口请求函数需要的数据：
+               pageSize:每页的条目数
+               pageNum：当前请求第几页（从1开始）
+               productDesc/productName：searchName根据商品描述/名称搜索
+            状态：searchType、searchName/在用户操作时搜集数据
+            异步搜索显示分页列表
+               如果searchName有值，调用搜索的接口请求函数获取数据并更新状态
+         3.更新商品的状态
+            初始显示：根据product的status属性来显示 status=1/2
+            点击切换：
+               绑定点击监听
+               异步请求更新状态
+         4.进入详情界面
+            memoryUtils.product=product
+            history.push('/product/detail')
+         5.进入添加界面
+            memoryUtils.product=product
+            history.push('/product/addupdate')
+         6.进入修改界面
+            memoryUtils.product=product
+            history.push('/product/addupdate')
+
+   ## 2.ProductDetail组件
+         1.读取商品数据：memoryUtils.product
+         2.显示商品信息：<Card>/List
+         3.异步显示商品所属分类的名称
+   
+   ## 3.ProductAddUpdate组件
+         1.基本界面
+         2.分类下拉列表的异步显示
+         3.表单数据收集与表单验证
+      
+   ## 4.PictureWall
+         1.antd组件
+            根据实例demo改造编写
+   ## 5.throttle_debounce
+         了解函数节流和函数防抖
+    

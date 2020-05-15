@@ -20,19 +20,19 @@ import User from '../user/user';
 
 const { Footer, Sider, Content } = Layout;
 
- class Admin extends Component {
+class Admin extends Component {
     render() {
 
 
         return (
-            
+
             <Layout style={{ height: '100%' }}>
                 <Sider>
                     <LeftNav />
                 </Sider>
                 <Layout>
                     <Header />
-                    <Content style={{ background: '#fff', margin:20 }}>
+                    <Content style={{ background: '#fff', margin: 20 }}>
                         <Switch>
                             <Route path="/home" component={Home} />
                             <Route path="/category" component={Category} />

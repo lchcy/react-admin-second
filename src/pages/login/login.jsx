@@ -3,14 +3,15 @@ import { Form, Icon, Input, Button } from 'antd';
 
 import logo from "../../assets/images/logo.png";
 import './login.less';
+// import { reqLogin } from '../../api';
 
 
 const { Item } = Form;
 
-    
+
 
 class Login extends Component {
-  
+
     handleSubmit = e => {
 
         //阻止时间的默认行为，阻止表单的提交
@@ -25,9 +26,13 @@ class Login extends Component {
         // console.log(values, username, password)
 
         // 对表单所有字段进行统一验证
-        this.props.form.validateFields((err, {username,password}) => {
+        this.props.form.validateFields((err, { username, password }) => {
             if (!err) {
                 this.props.history.replace('/')
+                // const result=await reqLogin(username,password)
+                // if(result.status===0){
+                //     const user=result.data
+                // }
             }
         });
         // alert('发送的ajax请求');
@@ -69,7 +74,7 @@ class Login extends Component {
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Item>
                             {getFieldDecorator('username', {//配置对象：属性名是一些特定的名称
-                                initialValue:'',//初始值
+                                initialValue: '',//初始值
                                 rules: [
                                     //声明式验证
                                     /*
@@ -94,7 +99,7 @@ class Login extends Component {
                         </Item>
                         <Item>
                             {getFieldDecorator('password', {
-                                initialValue:'',//初始值
+                                initialValue: '',//初始值
                                 rules: [
                                     { validator: this.validatePwd }
                                 ]
